@@ -1,8 +1,43 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import FetchData from "./fetch_data";
 
 function Header({ title }) {
   return <li key={title}>{title}</li>;
+}
+
+function Component1() {
+  const student = ["Mike", "Bob", "Jane"];
+  return student.map((a) => <li key={a}>{a}</li>);
+}
+
+function ChangeColor() {
+  const [color, setColor] = useState("white");
+
+  useEffect(() => {
+    console.log("useEffect");
+    document.body.style.backgroundColor = color;
+
+    return () => {
+      document.body.style.backgroundColor = "initial";
+    };
+  }, [color]);
+
+  const changeColor = () => {
+    if (color === "white") {
+      setColor("red");
+      console.log("setColorRed");
+    } else {
+      setColor("white");
+      console.log("setColorWhite");
+    }
+  };
+
+  return (
+    <div>
+      <button onClick={changeColor}>ChangeColor</button>
+    </div>
+  );
 }
 
 export default function HomePage() {
@@ -26,6 +61,12 @@ export default function HomePage() {
       <button onClick={handleClick}>
         Likes ({likes}){pom}
       </button>
+      <ul>
+        <Component1 />
+      </ul>
+      <ChangeColor />
+
+      <FetchData />
     </div>
   );
 }
